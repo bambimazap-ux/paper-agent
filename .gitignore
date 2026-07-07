@@ -1,0 +1,16 @@
+# Streamlit & Python temporary files
+__pycache__/
+.streamlit/
+*.pyc
+
+# Local PDF Cache
+pdf_cache/
+*.pdf
+
+# Local history logs
+search_history.json
+
+# Environment secrets
+.env
+.venv/
+venv/
