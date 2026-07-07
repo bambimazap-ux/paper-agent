@@ -183,6 +183,9 @@ st.markdown(
 # ==========================================
 # CONSTANTS & CONFIGURATION
 # ==========================================
+# Template variables for internal police networks (as per forensic-rd-env-context rules)
+POLICE_INTERNAL_SERVER_IP = "10.x.x.x"  # Swap with internal police server IP if routing via intranet proxy
+INTERNAL_LOGGING_SERVER = "http://10.x.x.x:5000/log"
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 HEADERS = {"User-Agent": USER_AGENT}
 CROSSREF_MAILTO = "mop.agent@gmail.com"
@@ -203,8 +206,65 @@ SCIHUB_MIRRORS = [
     "https://sci-hub.ru"
 ]
 
-# Thread lock for thread-safe writing to the history log
-history_lock = threading.RLock()
+# ==========================================
+# SECURITY & AUTHENTICATION (PASSWORD CHECK)
+# ==========================================
+def check_password():
+    """Returns True if the user has entered the correct password."""
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if st.session_state["password"] == st.secrets.get("password", "mop_division"):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # don't store password in session state
+        else:
+            st.session_state["password_correct"] = False
+
+    if "password_correct" not in st.session_state:
+        st.session_state["password_correct"] = False
+
+    if st.session_state["password_correct"]:
+        return True
+
+    # Render a premium glassmorphic login card
+    st.markdown(
+        """
+        <div style="max-width: 500px; margin: 80px auto 20px auto; padding: 30px; 
+                    background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px);
+                    -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.07); 
+                    border-radius: 14px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+                    text-align: center; direction: RTL;">
+            <h2 style="font-family: 'Rubik', sans-serif; font-size: 1.8rem; font-weight: 700; 
+                       background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); 
+                       -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">
+                כניסה למערכת 🔐
+            </h2>
+            <p style="color: #9ca3af; font-size: 1rem; margin-bottom: 20px; font-family: 'Assistant', sans-serif;">
+                סוכן הורדת מאמרים אקדמאיים - מדור מו"פ, חטיבת מז"פ
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.text_input(
+            "סיסמה חטיבתית:",
+            type="password",
+            on_change=password_entered,
+            key="password",
+            placeholder="הזן סיסמת גישה..."
+        )
+        if "password_correct" in st.session_state and not st.session_state["password_correct"]:
+            st.markdown(
+                """
+                <div class="warning-alert" style="margin-top: 10px; text-align: center;">
+                    😕 הסיסמה שהוזנה אינה נכונה. אנא נסה שנית.
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+    return False
 
 # ==========================================
 # USER IDENTIFICATION & HISTORY FUNCTIONS
@@ -671,6 +731,10 @@ def display_pdf_preview(pdf_bytes):
 # ==========================================
 # STREAMLIT STATE & SESSION MANAGEMENT
 # ==========================================
+# First enforce authentication
+if not check_password():
+    st.stop()
+
 user_id = get_user_id()
 
 if "search_results" not in st.session_state:
