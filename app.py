@@ -213,7 +213,7 @@ def check_password():
     """Returns True if the user has entered the correct password."""
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == st.secrets.get("password", "mop_division"):
+        if st.session_state["password"] == st.secrets.get("password", "123456"):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store password in session state
         else:
