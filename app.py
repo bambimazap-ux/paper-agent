@@ -27,31 +27,33 @@ st.markdown(
     """
     <style>
     /* 1. Google Fonts Import */
-    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Rubik:wght@400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Rubik:wght@400;500;700&family=Outfit:wght@400;600;800&display=swap');
 
-    /* 2. Global Page Styling & Typography */
+    /* 2. Global Page Styling & Typography with Sci-Fi Background Gradient */
     html, body, [class*="css"], .stApp {
         font-family: 'Assistant', 'Rubik', 'Segoe UI', sans-serif !important;
         direction: RTL;
         text-align: right;
-        background-color: #0b0f19; /* Sleek Dark Slate */
+        background-color: #05070f !important; /* Extremely Dark Sleek Slate */
+        background-image: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08) 0%, rgba(5, 7, 15, 1) 100%) !important;
+        background-attachment: fixed !important;
     }
 
     /* Scrollbar Styling */
     ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
     }
     ::-webkit-scrollbar-track {
-        background: #0b0f19;
+        background: #05070f;
     }
     ::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 3px;
         transition: background 0.3s;
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(99, 102, 241, 0.4);
+        background: rgba(99, 102, 241, 0.5);
     }
 
     /* 3. RTL Adjustments for Streamlit Components */
@@ -78,31 +80,143 @@ st.markdown(
         direction: RTL !important;
     }
 
+    /* 4. Responsive Header Styling */
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 32px;
+        margin-bottom: 25px;
+        direction: RTL;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .header-logo-primary {
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .header-logo-primary:hover {
+        transform: scale(1.08) rotate(5deg);
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.8);
+    }
+    
+    .header-info {
+        flex: 1;
+        text-align: center;
+        padding: 0 20px;
+    }
+    
+    .header-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin: 0 0 8px 0;
+        background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: 'Rubik', sans-serif;
+        text-shadow: 0 2px 10px rgba(99, 102, 241, 0.2);
+    }
+    
+    .header-subtitle {
+        color: #9ca3af;
+        font-size: 1.0rem;
+        margin: 0;
+        font-family: 'Assistant', sans-serif;
+    }
+
+    .header-logos-secondary {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .header-logo-sec {
+        height: 60px;
+        object-fit: contain;
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+        transition: transform 0.3s;
+    }
+    .header-logo-sec:hover {
+        transform: scale(1.05);
+    }
+
+    /* Mobile Responsive adjustments */
+    @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column !important;
+            padding: 25px 20px !important;
+            gap: 20px;
+        }
+        
+        .header-info {
+            padding: 0 !important;
+            order: 2;
+        }
+        
+        .header-title {
+            font-size: 1.6rem !important;
+        }
+        
+        .header-subtitle {
+            font-size: 0.85rem !important;
+        }
+        
+        .header-logo-primary {
+            height: 90px;
+            width: 90px;
+            order: 1;
+        }
+        
+        .header-logos-secondary {
+            justify-content: center !important;
+            width: 100%;
+            order: 3;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 15px;
+            gap: 25px;
+        }
+        
+        .header-logo-sec {
+            height: 45px !important;
+        }
+    }
+
     /* 4. Elegant Glassmorphism Cards */
     .premium-card {
         background: rgba(255, 255, 255, 0.02) !important;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        border-radius: 16px !important;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-radius: 20px !important;
         padding: 24px;
         margin-bottom: 24px;
-        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4) !important;
+        box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.45) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .premium-card:hover {
-        border-color: rgba(99, 102, 241, 0.35) !important;
+        border-color: rgba(99, 102, 241, 0.3) !important;
         transform: translateY(-3px);
-        box-shadow: 0 15px 45px 0 rgba(99, 102, 241, 0.1) !important;
+        box-shadow: 0 20px 50px 0 rgba(99, 102, 241, 0.12) !important;
     }
 
     /* 5. Custom Button Styling */
     .stButton button {
         color: white !important;
         border: none !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         font-weight: 600 !important;
-        font-size: 16px !important;
+        font-size: 15px !important;
         padding: 12px 24px !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         width: 100%;
@@ -122,13 +236,13 @@ st.markdown(
     
     /* Secondary Button Style (Glassmorphic dark with borders) */
     .stButton button[data-testid="baseButton-secondary"] {
-        background: rgba(255, 255, 255, 0.03) !important;
+        background: rgba(255, 255, 255, 0.02) !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
         color: #e5e7eb !important;
     }
     .stButton button[data-testid="baseButton-secondary"]:hover {
-        background: rgba(255, 255, 255, 0.07) !important;
-        border-color: rgba(20, 184, 166, 0.3) !important;
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(20, 184, 166, 0.35) !important;
         transform: translateY(-2px) !important;
         color: #ffffff !important;
     }
@@ -139,7 +253,7 @@ st.markdown(
 
     /* 6. Form Field Enhancements */
     div[data-testid="stTextInput"] input {
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         background-color: rgba(255, 255, 255, 0.02) !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
         color: #f3f4f6 !important;
@@ -157,17 +271,17 @@ st.markdown(
     .history-item {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 16px;
-        margin-bottom: 12px;
+        margin-bottom: 0px;
         transition: all 0.3s ease;
         text-align: right;
         direction: RTL;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     .history-item:hover {
         background: rgba(255, 255, 255, 0.04);
         border-color: rgba(20, 184, 166, 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     
     /* 8. Elegant Status Notifications */
@@ -178,7 +292,7 @@ st.markdown(
         border-bottom: 1px solid rgba(16, 185, 129, 0.1);
         border-left: 1px solid rgba(16, 185, 129, 0.1);
         padding: 16px 20px;
-        border-radius: 12px;
+        border-radius: 14px;
         margin-bottom: 20px;
         text-align: right;
         direction: RTL;
@@ -191,7 +305,7 @@ st.markdown(
         border-bottom: 1px solid rgba(245, 158, 11, 0.1);
         border-left: 1px solid rgba(245, 158, 11, 0.1);
         padding: 16px 20px;
-        border-radius: 12px;
+        border-radius: 14px;
         margin-bottom: 20px;
         text-align: right;
         direction: RTL;
@@ -203,7 +317,7 @@ st.markdown(
         background: rgba(255, 255, 255, 0.02) !important;
         backdrop-filter: blur(12px) !important;
         border: 1px solid rgba(255, 255, 255, 0.06) !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
     }
     div[data-testid="stAlert"] [data-testid="stMarkdownContainer"] {
@@ -220,14 +334,20 @@ st.markdown(
         margin-top: 15px;
     }
 
-    /* 10. Status Spinner / Loader styling */
+    /* 10. Status Spinner / Loader styling (Futuristic AI radar scan pulse) */
     div[data-testid="stStatusWidget"] {
-        background: rgba(255, 255, 255, 0.02) !important;
+        background: rgba(255, 255, 255, 0.01) !important;
         backdrop-filter: blur(16px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.07) !important;
-        border-radius: 14px !important;
-        padding: 14px !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid rgba(99, 102, 241, 0.25) !important;
+        border-radius: 16px !important;
+        padding: 16px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+        animation: radar-pulse 2s infinite !important;
+    }
+    @keyframes radar-pulse {
+        0% { box-shadow: 0 0 8px rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.2); }
+        50% { box-shadow: 0 0 25px rgba(99, 102, 241, 0.5); border-color: rgba(99, 102, 241, 0.5); }
+        100% { box-shadow: 0 0 8px rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.2); }
     }
     div[data-testid="stStatusWidget"] summary {
         color: #a5b4fc !important;
@@ -243,7 +363,7 @@ st.markdown(
         background: rgba(255, 255, 255, 0.02);
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
+        border-radius: 18px;
         padding: 24px;
         margin-bottom: 24px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
@@ -311,7 +431,7 @@ st.markdown(
     .fallback-card {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 14px;
+        border-radius: 16px;
         padding: 16px 20px;
         margin-bottom: 12px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -387,62 +507,6 @@ SCIHUB_MIRRORS = [
 
 # Thread lock for thread-safe writing to the history log
 history_lock = threading.RLock()
-
-# ==========================================
-# SECURITY & AUTHENTICATION (PASSWORD CHECK)
-# ==========================================
-def check_password():
-    """Returns True if the user has entered the correct password."""
-    def password_entered():
-        """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == st.secrets.get("password", "123456"):
-            st.session_state["password_correct"] = True
-            del st.session_state["password"]  # don't store password in session state
-        else:
-            st.session_state["password_correct"] = False
-
-    if "password_correct" not in st.session_state:
-        st.session_state["password_correct"] = False
-
-    if st.session_state["password_correct"]:
-        return True
-
-    # Render a centered login layout
-    col1, col2, col3 = st.columns([1, 1.6, 1])
-    with col2:
-        st.markdown(
-            """
-            <div style="margin-top: 80px; margin-bottom: 10px; text-align: center;">
-                <span style="font-size: 3.5rem;">🔐</span>
-                <h2 style="font-family: 'Rubik', sans-serif; font-size: 1.8rem; font-weight: 700; 
-                           background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); 
-                           -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 10px; margin-bottom: 6px; text-align: center;">
-                    כניסה למערכת
-                </h2>
-                <p style="color: #9ca3af; font-size: 0.95rem; margin-bottom: 25px; font-family: 'Assistant', sans-serif; text-align: center;">
-                    סוכן הורדת מאמרים אקדמאיים • מדור מו"פ, חטיבת מז"פ
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.text_input(
-            "סיסמה חטיבתית:",
-            type="password",
-            on_change=password_entered,
-            key="password",
-            placeholder="הזן סיסמת גישה..."
-        )
-        if "password_correct" in st.session_state and not st.session_state["password_correct"]:
-            st.markdown(
-                """
-                <div class="warning-alert" style="margin-top: 15px; text-align: center;">
-                    😕 הסיסמה שהוזנה אינה נכונה. אנא נסה שנית.
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-    return False
 
 # ==========================================
 # USER IDENTIFICATION & HISTORY FUNCTIONS
@@ -909,10 +973,6 @@ def display_pdf_preview(pdf_bytes):
 # ==========================================
 # STREAMLIT STATE & SESSION MANAGEMENT
 # ==========================================
-# First enforce authentication
-if not check_password():
-    st.stop()
-
 user_id = get_user_id()
 
 if "search_results" not in st.session_state:
@@ -938,21 +998,24 @@ def get_image_base64_string(path):
 
 logo_r_b64 = get_image_base64_string("לוגו מדור מופ.png")
 logo_l_b64 = get_image_base64_string("logo.png")
+logo_ai_b64 = get_image_base64_string("ai_agent_logo.png")
 
-logo_r_html = f'<img src="data:image/png;base64,{logo_r_b64}" style="height: 70px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.4));" />' if logo_r_b64 else '<div style="width: 70px;"></div>'
-logo_l_html = f'<img src="data:image/png;base64,{logo_l_b64}" style="height: 70px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.4));" />' if logo_l_b64 else '<div style="width: 70px;"></div>'
+logo_r_html = f'<img src="data:image/png;base64,{logo_r_b64}" class="header-logo-sec" />' if logo_r_b64 else ''
+logo_l_html = f'<img src="data:image/png;base64,{logo_l_b64}" class="header-logo-sec" />' if logo_l_b64 else ''
+logo_ai_html = f'<img src="data:image/png;base64,{logo_ai_b64}" class="header-logo-primary" />' if logo_ai_b64 else '<span style="font-size: 70px;">📑</span>'
 
 st.markdown(
     f"""
-    <div class="premium-card" style="display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; margin-bottom: 25px; direction: RTL;">
-        <div style="flex: 0 0 100px; display: flex; justify-content: flex-start; align-items: center;">
+    <div class="header-container">
+        <div style="display: flex; align-items: center; justify-content: center;">
+            {logo_ai_html}
+        </div>
+        <div class="header-info">
+            <h1 class="header-title">סוכן מחקר אקדמי AI 📑</h1>
+            <p class="header-subtitle">מערכת חכמה מבוססת סוכן לאיתור, משיכה ותצוגה מקדימה של מאמרי מחקר</p>
+        </div>
+        <div class="header-logos-secondary">
             {logo_r_html}
-        </div>
-        <div style="flex: 1; text-align: center; padding: 0 15px;">
-            <h1 style="font-size: 2.0rem; font-weight: 700; margin: 0 0 6px 0; background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Rubik', sans-serif; text-align: center;">סוכן הורדת מאמרים אקדמאיים 📑</h1>
-            <p style="color: #9ca3af; font-size: 0.95rem; margin: 0; font-family: 'Assistant', sans-serif; text-align: center;">מערכת חכמה לאיתור, משיכה ותצוגה מקדימה של מאמרי מחקר • מדור מו"פ, חטיבת מז"פ</p>
-        </div>
-        <div style="flex: 0 0 100px; display: flex; justify-content: flex-end; align-items: center;">
             {logo_l_html}
         </div>
     </div>
@@ -962,8 +1025,8 @@ st.markdown(
 
 # Handle text input bound to st.session_state["search_input"]
 user_input = st.text_input(
-    label="שם המאמר (למשל: Attention Is All You Need) או קוד DOI (למשל: 10.1145/3065386):",
-    placeholder="הקלד כאן...",
+    label="🔍 הזן שם מאמר או מזהה DOI:",
+    placeholder="למשל: Attention Is All You Need או 10.1145/3065386...",
     key="search_input"
 )
 
@@ -998,23 +1061,26 @@ if st.session_state["show_history"]:
             status_icon = "🟢" if entry['status'] == "הצלחה" else "🟡"
             title_truncated = entry['resolved_title']
             
-            st.markdown(
-                f"""
-                <div class="history-item">
-                    <div style="font-size: 14px; font-weight: 600; color: #e5e7eb; margin-bottom: 6px;">{title_truncated}</div>
-                    <div style="font-size: 12px; color: #9ca3af; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span>סטטוס: {status_icon} {entry['status']}</span>
-                        <span>זמן: {entry['timestamp']}</span>
+            col_text, col_reload = st.columns([5, 1.2])
+            with col_text:
+                st.markdown(
+                    f"""
+                    <div class="history-item">
+                        <div style="font-size: 14px; font-weight: 600; color: #e5e7eb; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{title_truncated}</div>
+                        <div style="font-size: 11px; color: #9ca3af; display: flex; justify-content: space-between;">
+                            <span>סטטוס: {status_icon} {entry['status']}</span>
+                            <span>{entry['timestamp'].split(' ')[1]}</span>
+                        </div>
                     </div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            if st.button("🔎 טען מאמר זה מחדש", key=f"hist_btn_{entry['timestamp']}_{idx}", use_container_width=True, type="secondary"):
-                st.session_state["search_input"] = entry["query"]
-                st.session_state["search_results"] = None  # Reset results
-                st.session_state["show_history"] = False   # Close history panel
-                st.rerun()
+                    """,
+                    unsafe_allow_html=True
+                )
+            with col_reload:
+                if st.button("🔄", key=f"hist_btn_{entry['timestamp']}_{idx}", use_container_width=True, type="secondary", help="טען מחדש"):
+                    st.session_state["search_input"] = entry["query"]
+                    st.session_state["search_results"] = None  # Reset results
+                    st.session_state["show_history"] = False   # Close history panel
+                    st.rerun()
     else:
         st.caption("אין חיפושים קודמים במכשיר זה.")
     st.write("---")
