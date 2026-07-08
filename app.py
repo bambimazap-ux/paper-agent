@@ -254,9 +254,10 @@ st.markdown(
     /* 6. Form Field Enhancements */
     div[data-testid="stTextInput"] input {
         border-radius: 14px !important;
-        background-color: rgba(255, 255, 255, 0.02) !important;
+        background-color: #111827 !important; /* Solid dark slate to prevent white overrides */
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        color: #f3f4f6 !important;
+        color: #ffffff !important; /* Force solid white text */
+        -webkit-text-fill-color: #ffffff !important; /* Force solid white text on mobile Safari/iOS */
         font-size: 15px !important;
         padding: 14px 18px !important;
         transition: all 0.3s ease !important;
@@ -264,7 +265,21 @@ st.markdown(
     div[data-testid="stTextInput"] input:focus {
         border-color: #6366f1 !important;
         box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
-        background-color: rgba(255, 255, 255, 0.04) !important;
+        background-color: #1e293b !important; /* Solid slightly lighter slate on focus */
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    div[data-testid="stTextInput"] label p {
+        color: #e5e7eb !important;
+        font-weight: 500 !important;
+    }
+    /* Webkit Autofill Override to prevent light background / black text */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus, 
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px #111827 inset !important;
+        -webkit-text-fill-color: #ffffff !important;
     }
 
     /* 7. Recent Searches Item Styling */
