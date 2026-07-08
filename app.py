@@ -212,8 +212,6 @@ st.markdown(
 
     /* 5. Custom Button Styling */
     .stButton button {
-        color: white !important;
-        border: none !important;
         border-radius: 14px !important;
         font-weight: 600 !important;
         font-size: 15px !important;
@@ -223,27 +221,37 @@ st.markdown(
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     }
     
+    /* Force high-contrast text color for ALL secondary buttons */
+    .stButton button,
+    .stButton button[data-testid="baseButton-secondary"],
+    .stButton button[kind="secondary"] {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        color: #ffffff !important; /* Force text to be pure white */
+    }
+    
+    .stButton button:hover,
+    .stButton button[data-testid="baseButton-secondary"]:hover,
+    .stButton button[kind="secondary"]:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border-color: rgba(99, 102, 241, 0.4) !important;
+        transform: translateY(-2px) !important;
+        color: #ffffff !important; /* Keep text white on hover */
+    }
+    
     /* Primary Button Style (Gradient & Glow) */
-    .stButton button[data-testid="baseButton-primary"] {
+    .stButton button[data-testid="baseButton-primary"],
+    .stButton button[kind="primary"] {
         background: linear-gradient(135deg, #6366f1 0%, #14b8a6 100%) !important;
+        border: none !important;
+        color: #ffffff !important; /* Force text color to be white */
         box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25) !important;
     }
-    .stButton button[data-testid="baseButton-primary"]:hover {
+    .stButton button[data-testid="baseButton-primary"]:hover,
+    .stButton button[kind="primary"]:hover {
         background: linear-gradient(135deg, #4f46e5 0%, #0d9488 100%) !important;
         transform: translateY(-2px) !important;
         box-shadow: 0 6px 22px rgba(99, 102, 241, 0.45) !important;
-    }
-    
-    /* Secondary Button Style (Glassmorphic dark with borders) */
-    .stButton button[data-testid="baseButton-secondary"] {
-        background: rgba(255, 255, 255, 0.02) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        color: #e5e7eb !important;
-    }
-    .stButton button[data-testid="baseButton-secondary"]:hover {
-        background: rgba(255, 255, 255, 0.06) !important;
-        border-color: rgba(20, 184, 166, 0.35) !important;
-        transform: translateY(-2px) !important;
         color: #ffffff !important;
     }
     
@@ -986,6 +994,20 @@ def display_pdf_preview(pdf_bytes):
         st.error(f"שגיאה בהצגת תצוגה מקדימה של ה-PDF: {e}")
 
 # ==========================================
+# WIDGET STATE CALLBACK FUNCTIONS
+# ==========================================
+def clear_search():
+    st.session_state["search_results"] = None
+    st.session_state["search_input"] = ""
+    st.session_state["last_query"] = ""
+    st.session_state["show_history"] = False
+
+def load_history_item(query):
+    st.session_state["search_input"] = query
+    st.session_state["search_results"] = None
+    st.session_state["show_history"] = False
+
+# ==========================================
 # STREAMLIT STATE & SESSION MANAGEMENT
 # ==========================================
 user_id = get_user_id()
@@ -1050,18 +1072,11 @@ col_search, col_new, col_hist = st.columns([2, 1, 1])
 with col_search:
     search_button = st.button("🔎 התחל באיתור והורדה", use_container_width=True, type="primary")
 with col_new:
-    new_search_button = st.button("➕ חיפוש חדש", use_container_width=True, type="secondary")
+    new_search_button = st.button("➕ חיפוש חדש", use_container_width=True, type="secondary", on_click=clear_search)
 with col_hist:
     history_button = st.button("🕒 היסטוריה", use_container_width=True, type="secondary")
 
 # Handle search control triggers
-if new_search_button:
-    st.session_state["search_results"] = None
-    st.session_state["search_input"] = ""
-    st.session_state["last_query"] = ""
-    st.session_state["show_history"] = False
-    st.rerun()
-
 if history_button:
     st.session_state["show_history"] = not st.session_state["show_history"]
     st.rerun()
@@ -1091,11 +1106,7 @@ if st.session_state["show_history"]:
                     unsafe_allow_html=True
                 )
             with col_reload:
-                if st.button("🔄", key=f"hist_btn_{entry['timestamp']}_{idx}", use_container_width=True, type="secondary", help="טען מחדש"):
-                    st.session_state["search_input"] = entry["query"]
-                    st.session_state["search_results"] = None  # Reset results
-                    st.session_state["show_history"] = False   # Close history panel
-                    st.rerun()
+                st.button("🔄", key=f"hist_btn_{entry['timestamp']}_{idx}", use_container_width=True, type="secondary", help="טען מחדש", on_click=load_history_item, args=(entry["query"],))
     else:
         st.caption("אין חיפושים קודמים במכשיר זה.")
     st.write("---")
