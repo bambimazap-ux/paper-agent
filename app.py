@@ -37,6 +37,23 @@ st.markdown(
         background-color: #0b0f19; /* Sleek Dark Slate */
     }
 
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        transition: background 0.3s;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(99, 102, 241, 0.4);
+    }
+
     /* 3. RTL Adjustments for Streamlit Components */
     .stMarkdown p, .stMarkdown li, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4, .stMarkdown h5 {
         text-align: right !important;
@@ -63,54 +80,57 @@ st.markdown(
 
     /* 4. Elegant Glassmorphism Cards */
     .premium-card {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 14px;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        transition: transform 0.2s ease, border-color 0.2s ease;
+        background: rgba(255, 255, 255, 0.02) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-radius: 16px !important;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .premium-card:hover {
-        border-color: rgba(99, 102, 241, 0.4);
-        transform: translateY(-2px);
+        border-color: rgba(99, 102, 241, 0.35) !important;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 45px 0 rgba(99, 102, 241, 0.1) !important;
     }
 
     /* 5. Custom Button Styling */
     .stButton button {
         color: white !important;
         border: none !important;
-        border-radius: 10px !important;
+        border-radius: 12px !important;
         font-weight: 600 !important;
         font-size: 16px !important;
-        padding: 10px 24px !important;
+        padding: 12px 24px !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
     }
     
     /* Primary Button Style (Gradient & Glow) */
     .stButton button[data-testid="baseButton-primary"] {
         background: linear-gradient(135deg, #6366f1 0%, #14b8a6 100%) !important;
-        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25) !important;
     }
     .stButton button[data-testid="baseButton-primary"]:hover {
         background: linear-gradient(135deg, #4f46e5 0%, #0d9488 100%) !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5) !important;
+        box-shadow: 0 6px 22px rgba(99, 102, 241, 0.45) !important;
     }
     
     /* Secondary Button Style (Glassmorphic dark with borders) */
     .stButton button[data-testid="baseButton-secondary"] {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
         color: #e5e7eb !important;
     }
     .stButton button[data-testid="baseButton-secondary"]:hover {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border-color: rgba(20, 184, 166, 0.4) !important;
+        background: rgba(255, 255, 255, 0.07) !important;
+        border-color: rgba(20, 184, 166, 0.3) !important;
         transform: translateY(-2px) !important;
+        color: #ffffff !important;
     }
     
     .stButton button:active {
@@ -119,61 +139,220 @@ st.markdown(
 
     /* 6. Form Field Enhancements */
     div[data-testid="stTextInput"] input {
-        border-radius: 10px !important;
-        background-color: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 12px !important;
+        background-color: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
         color: #f3f4f6 !important;
         font-size: 15px !important;
-        padding: 12px 16px !important;
-        transition: all 0.2s ease !important;
+        padding: 14px 18px !important;
+        transition: all 0.3s ease !important;
     }
     div[data-testid="stTextInput"] input:focus {
         border-color: #6366f1 !important;
-        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
-        background-color: rgba(255, 255, 255, 0.05) !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+        background-color: rgba(255, 255, 255, 0.04) !important;
     }
 
-    /* 7. Sidebar Recent Searches Item Styling */
+    /* 7. Recent Searches Item Styling */
     .history-item {
         background: rgba(255, 255, 255, 0.02);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        padding: 10px 12px;
-        margin-bottom: 8px;
-        transition: background 0.2s ease;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
         text-align: right;
+        direction: RTL;
     }
     .history-item:hover {
         background: rgba(255, 255, 255, 0.04);
         border-color: rgba(20, 184, 166, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
     
     /* 8. Elegant Status Notifications */
     .success-alert {
         border-right: 4px solid #10b981;
-        background: rgba(16, 185, 129, 0.1);
-        padding: 12px 16px;
-        border-radius: 8px;
-        margin-bottom: 15px;
+        background: rgba(16, 185, 129, 0.06);
+        border-top: 1px solid rgba(16, 185, 129, 0.1);
+        border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+        border-left: 1px solid rgba(16, 185, 129, 0.1);
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
         text-align: right;
         direction: RTL;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.05);
     }
     .warning-alert {
         border-right: 4px solid #f59e0b;
-        background: rgba(245, 158, 11, 0.1);
-        padding: 12px 16px;
-        border-radius: 8px;
-        margin-bottom: 15px;
+        background: rgba(245, 158, 11, 0.06);
+        border-top: 1px solid rgba(245, 158, 11, 0.1);
+        border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+        border-left: 1px solid rgba(245, 158, 11, 0.1);
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
         text-align: right;
         direction: RTL;
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.05);
+    }
+
+    /* Custom Streamlit Alert Overrides */
+    div[data-testid="stAlert"] {
+        background: rgba(255, 255, 255, 0.02) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+    }
+    div[data-testid="stAlert"] [data-testid="stMarkdownContainer"] {
+        text-align: right !important;
+        direction: RTL !important;
     }
     
     /* 9. Scrollable Iframe Wrapper */
     .pdf-preview-wrapper {
-        border-radius: 12px;
+        border-radius: 16px;
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+        margin-top: 15px;
+    }
+
+    /* 10. Status Spinner / Loader styling */
+    div[data-testid="stStatusWidget"] {
+        background: rgba(255, 255, 255, 0.02) !important;
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.07) !important;
+        border-radius: 14px !important;
+        padding: 14px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    }
+    div[data-testid="stStatusWidget"] summary {
+        color: #a5b4fc !important;
+        font-family: 'Rubik', sans-serif !important;
+        font-weight: 600 !important;
+    }
+    div[data-testid="stStatusWidget"] summary:hover {
+        color: #818cf8 !important;
+    }
+
+    /* 11. Detailed Paper Metadata Layout */
+    .metadata-card {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .metadata-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 16px;
+        line-height: 1.4;
+        font-family: 'Rubik', sans-serif;
+    }
+
+    .metadata-grid {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+        text-align: right;
+    }
+    
+    .metadata-label {
+        font-weight: 600;
+        color: #9ca3af;
+        font-size: 14px;
+    }
+    
+    .metadata-value {
+        color: #f3f4f6;
+        font-size: 14px;
+        word-break: break-all;
+    }
+    
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-right: 5px;
+    }
+    .badge-success {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .badge-info {
+        background: rgba(99, 102, 241, 0.15);
+        color: #a5b4fc;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .badge-warning {
+        background: rgba(245, 158, 11, 0.15);
+        color: #f59e0b;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* 12. Fallback Link Cards */
+    .fallback-container {
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .fallback-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 14px;
+        padding: 16px 20px;
+        margin-bottom: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-decoration: none !important;
+    }
+    .fallback-card:hover {
+        background: rgba(99, 102, 241, 0.04);
+        border-color: rgba(99, 102, 241, 0.3);
+        transform: translateX(-6px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12);
+    }
+    
+    .fallback-content {
+        flex-grow: 1;
+        padding-left: 15px;
+        text-align: right;
+    }
+
+    .fallback-title {
+        color: #f3f4f6;
+        font-weight: 600;
+        font-size: 15px;
+        margin-bottom: 4px;
+    }
+    .fallback-url {
+        color: #9ca3af;
+        font-size: 12px;
+        word-break: break-all;
+    }
+    .fallback-arrow {
+        color: #6366f1;
+        font-size: 22px;
+        font-weight: bold;
+        transition: transform 0.3s;
+    }
+    .fallback-card:hover .fallback-arrow {
+        transform: translateX(-4px);
+        color: #2dd4bf;
     }
     </style>
     """,
@@ -228,29 +407,25 @@ def check_password():
     if st.session_state["password_correct"]:
         return True
 
-    # Render a premium glassmorphic login card
-    st.markdown(
-        """
-        <div style="max-width: 500px; margin: 80px auto 20px auto; padding: 30px; 
-                    background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px);
-                    -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.07); 
-                    border-radius: 14px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-                    text-align: center; direction: RTL;">
-            <h2 style="font-family: 'Rubik', sans-serif; font-size: 1.8rem; font-weight: 700; 
-                       background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); 
-                       -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">
-                כניסה למערכת 🔐
-            </h2>
-            <p style="color: #9ca3af; font-size: 1rem; margin-bottom: 20px; font-family: 'Assistant', sans-serif;">
-                סוכן הורדת מאמרים אקדמאיים - מדור מו"פ, חטיבת מז"פ
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    col1, col2, col3 = st.columns([1, 2, 1])
+    # Render a centered login layout
+    col1, col2, col3 = st.columns([1, 1.6, 1])
     with col2:
+        st.markdown(
+            """
+            <div style="margin-top: 80px; margin-bottom: 10px; text-align: center;">
+                <span style="font-size: 3.5rem;">🔐</span>
+                <h2 style="font-family: 'Rubik', sans-serif; font-size: 1.8rem; font-weight: 700; 
+                           background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); 
+                           -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 10px; margin-bottom: 6px; text-align: center;">
+                    כניסה למערכת
+                </h2>
+                <p style="color: #9ca3af; font-size: 0.95rem; margin-bottom: 25px; font-family: 'Assistant', sans-serif; text-align: center;">
+                    סוכן הורדת מאמרים אקדמאיים • מדור מו"פ, חטיבת מז"פ
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         st.text_input(
             "סיסמה חטיבתית:",
             type="password",
@@ -261,7 +436,7 @@ def check_password():
         if "password_correct" in st.session_state and not st.session_state["password_correct"]:
             st.markdown(
                 """
-                <div class="warning-alert" style="margin-top: 10px; text-align: center;">
+                <div class="warning-alert" style="margin-top: 15px; text-align: center;">
                     😕 הסיסמה שהוזנה אינה נכונה. אנא נסה שנית.
                 </div>
                 """,
@@ -752,33 +927,38 @@ if "show_history" not in st.session_state:
 # ==========================================
 # MAIN INTERFACE BRANDING HEADER
 # ==========================================
-st.write("")
-col_logo_r, col_title, col_logo_l = st.columns([1, 3, 1])
+def get_image_base64_string(path):
+    if os.path.exists(path):
+        try:
+            with open(path, "rb") as f:
+                return base64.b64encode(f.read()).decode('utf-8')
+        except Exception:
+            return ""
+    return ""
 
-with col_logo_r:
-    if os.path.exists("לוגו מדור מופ.png"):
-        st.image("לוגו מדור מופ.png", width=95)
-    else:
-        st.image("https://via.placeholder.com/150?text=MOP+Logo", width=95)
+logo_r_b64 = get_image_base64_string("לוגו מדור מופ.png")
+logo_l_b64 = get_image_base64_string("logo.png")
 
-with col_title:
-    st.markdown(
-        """
-        <div style="text-align: center; margin-top: 10px;">
-            <h1 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 5px; background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">סוכן הורדת מאמרים אקדמאיים 📑</h1>
-            <p style="color: #9ca3af; font-size: 1.05rem;">מערכת חכמה לאיתור, משיכה ותצוגה מקדימה של מאמרי מחקר</p>
+logo_r_html = f'<img src="data:image/png;base64,{logo_r_b64}" style="height: 70px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.4));" />' if logo_r_b64 else '<div style="width: 70px;"></div>'
+logo_l_html = f'<img src="data:image/png;base64,{logo_l_b64}" style="height: 70px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(20, 184, 166, 0.4));" />' if logo_l_b64 else '<div style="width: 70px;"></div>'
+
+st.markdown(
+    f"""
+    <div class="premium-card" style="display: flex; align-items: center; justify-content: space-between; padding: 20px 30px; margin-bottom: 25px; direction: RTL;">
+        <div style="flex: 0 0 100px; display: flex; justify-content: flex-start; align-items: center;">
+            {logo_r_html}
         </div>
-        """, 
-        unsafe_allow_html=True
-    )
-
-with col_logo_l:
-    if os.path.exists("logo.png"):
-        st.image("logo.png", width=95)
-    else:
-        st.image("https://via.placeholder.com/150?text=Division+Logo", width=95)
-
-st.write("---")
+        <div style="flex: 1; text-align: center; padding: 0 15px;">
+            <h1 style="font-size: 2.0rem; font-weight: 700; margin: 0 0 6px 0; background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #2dd4bf 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Rubik', sans-serif; text-align: center;">סוכן הורדת מאמרים אקדמאיים 📑</h1>
+            <p style="color: #9ca3af; font-size: 0.95rem; margin: 0; font-family: 'Assistant', sans-serif; text-align: center;">מערכת חכמה לאיתור, משיכה ותצוגה מקדימה של מאמרי מחקר • מדור מו"פ, חטיבת מז"פ</p>
+        </div>
+        <div style="flex: 0 0 100px; display: flex; justify-content: flex-end; align-items: center;">
+            {logo_l_html}
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Handle text input bound to st.session_state["search_input"]
 user_input = st.text_input(
@@ -1029,12 +1209,37 @@ if st.session_state["search_results"] is not None:
     st.write("") 
     
     if pdf_bytes:
-        # Elegant Success Alert Card
+        # Determine source label and badge
+        source_label = "Unpaywall / OpenAccess"
+        if pdf_link == "LOCAL_CACHE":
+            source_label = "שרת המטמון המקומי (מז\"פ)"
+            badge_html = '<span class="badge badge-success">שמור במטמון 📦</span>'
+        elif pdf_link and "sci-hub" in str(pdf_link).lower():
+            source_label = "שרת Sci-Hub"
+            badge_html = '<span class="badge badge-warning">מקור חלופי 🔘</span>'
+        else:
+            badge_html = '<span class="badge badge-info">גישה חופשית 🟢</span>'
+
+        doi_value = doi if doi else "לא ידוע / חיפוש חופשי"
+
+        # Elegant Success Alert & Detailed Metadata Card
         st.markdown(
             f"""
-            <div class="success-alert">
-                <span style="font-size: 16px; font-weight: 600; color: #34d399;">🎉 המאמר נמצא והורד בהצלחה!</span><br/>
-                <span style="font-size: 14px; color: #e5e7eb;"><b>כותרת:</b> {resolved_title}</span>
+            <div class="success-alert" style="margin-bottom: 15px;">
+                🎉 <b>המאמר נמצא והורד בהצלחה!</b> הקובץ זמין כעת להורדה ולתצוגה מקדימה.
+            </div>
+            <div class="metadata-card">
+                <div class="metadata-title">{resolved_title}</div>
+                <div class="metadata-grid">
+                    <div class="metadata-label">מזהה DOI:</div>
+                    <div class="metadata-value">{doi_value}</div>
+                    
+                    <div class="metadata-label">מקור ההורדה:</div>
+                    <div class="metadata-value">{source_label}</div>
+                    
+                    <div class="metadata-label">סטטוס זמינות:</div>
+                    <div class="metadata-value">{badge_html}</div>
+                </div>
             </div>
             """, 
             unsafe_allow_html=True
@@ -1052,10 +1257,12 @@ if st.session_state["search_results"] is not None:
                 type="primary"
             )
         with col_info:
-            if pdf_link != "LOCAL_CACHE":
+            if pdf_link != "LOCAL_CACHE" and pdf_link:
                 st.link_button("🔗 פתיחת מקור ישיר בדפדפן", pdf_link, use_container_width=True, type="secondary")
+            elif doi:
+                st.link_button("🔗 פתיחת עמוד מאמר רשמי (DOI)", f"https://dx.doi.org/{doi}", use_container_width=True, type="secondary")
             else:
-                st.info("💡 נטען ישירות משרת המטמון המקומי.")
+                st.link_button("🔗 חיפוש כותרת המאמר ברשת", f"https://www.google.com/search?q={resolved_title}", use_container_width=True, type="secondary")
                 
         # Premium: Inline PDF Preview
         st.write("---")
@@ -1074,9 +1281,19 @@ if st.session_state["search_results"] is not None:
             unsafe_allow_html=True
         )
         
+        fallback_html = '<div class="fallback-container">'
         for idx, item in enumerate(fallback_results, 1):
-            st.markdown(f"**{idx}. [{item['title']}]({item['url']})**")
-            st.caption(f"קישור: {item['url']}")
+            fallback_html += f"""
+            <a href="{item['url']}" target="_blank" class="fallback-card">
+                <div class="fallback-content">
+                    <div class="fallback-title">{idx}. {item['title']}</div>
+                    <div class="fallback-url">{item['url']}</div>
+                </div>
+                <div class="fallback-arrow">←</div>
+            </a>
+            """
+        fallback_html += '</div>'
+        st.markdown(fallback_html, unsafe_allow_html=True)
             
     else:
         st.error("❌ מצטערים, לא הצלחנו למצוא קישורים זמינים למאמר זה במערכת.")
