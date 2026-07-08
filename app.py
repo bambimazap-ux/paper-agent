@@ -206,6 +206,9 @@ SCIHUB_MIRRORS = [
     "https://sci-hub.ru"
 ]
 
+# Thread lock for thread-safe writing to the history log
+history_lock = threading.RLock()
+
 # ==========================================
 # SECURITY & AUTHENTICATION (PASSWORD CHECK)
 # ==========================================
