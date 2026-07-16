@@ -1333,7 +1333,7 @@ if st.session_state["search_results"] is not None:
                     <div class="metadata-value">{badge_html}</div>
                 </div>
             </div>
-            """, 
+            """,
             unsafe_allow_html=True
         )
         
@@ -1369,7 +1369,7 @@ if st.session_state["search_results"] is not None:
                 <span style="font-size: 16px; font-weight: 600; color: #f59e0b;">⚠️ לא הצלחנו להוריד את המאמר ישירות</span><br/>
                 <span style="font-size: 14px; color: #e5e7eb;">אך מצאנו מספר קישורים בעלי סבירות גבוהה לאיתור הקובץ:</span>
             </div>
-            """, 
+            """,
             unsafe_allow_html=True
         )
         
