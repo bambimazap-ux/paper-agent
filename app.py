@@ -913,18 +913,41 @@ def get_scihub_pdf(doi):
 
 # Step 4b: Fallback DuckDuckGo Search
 def search_fallback_links(title, doi=None, green_url=None, sem_scholar_url=None):
-    links = []
+    sciencedirect_links = []
+    other_links = []
     
+    # 1. ScienceDirect Priority via DOI (if it starts with 10.1016/ which is Elsevier/ScienceDirect)
+    if doi and doi.lower().startswith("10.1016/"):
+        sciencedirect_links.append({
+            "title": "📚 עמוד מאמר ב-ScienceDirect (Elsevier)",
+            "url": f"https://doi.org/{doi}"
+        })
+        
+    # 2. Unpaywall (Green)
     if green_url:
-        links.append({
-            "title": "🟢 קישור ירוק - עמוד מאמר בגישה חופשית (Unpaywall)",
-            "url": green_url
-        })
+        if "sciencedirect.com" in green_url.lower():
+            sciencedirect_links.append({
+                "title": "🟢 קישור ירוק - עמוד מאמר בגישה חופשית (Unpaywall)",
+                "url": green_url
+            })
+        else:
+            other_links.append({
+                "title": "🟢 קישור ירוק - עמוד מאמר בגישה חופשית (Unpaywall)",
+                "url": green_url
+            })
+            
+    # 3. Semantic Scholar
     if sem_scholar_url:
-        links.append({
-            "title": "🎓 עמוד מאמר ב-Semantic Scholar (גישה חופשית)",
-            "url": sem_scholar_url
-        })
+        if "sciencedirect.com" in sem_scholar_url.lower():
+            sciencedirect_links.append({
+                "title": "🎓 עמוד מאמר ב-Semantic Scholar (גישה חופשית)",
+                "url": sem_scholar_url
+            })
+        else:
+            other_links.append({
+                "title": "🎓 עמוד מאמר ב-Semantic Scholar (גישה חופשית)",
+                "url": sem_scholar_url
+            })
         
     # Clean and optimize search query to prevent generic letters matching
     search_query = sanitize_search_query(title) if title else ""
@@ -933,46 +956,84 @@ def search_fallback_links(title, doi=None, green_url=None, sem_scholar_url=None)
         # Execute fallback searches reusing a single DDGS session to avoid rate limits
         try:
             with DDGS() as ddgs:
-                # 1. ResearchGate Search
+                # A. Specific ScienceDirect Search (only if we didn't add it via DOI already)
+                if not (doi and doi.lower().startswith("10.1016/")):
+                    try:
+                        sd_results = ddgs.text(f'site:sciencedirect.com "{search_query}"', max_results=2)
+                        for r in sd_results:
+                            url = r.get("href")
+                            if url and "sciencedirect.com" in url.lower():
+                                sciencedirect_links.append({
+                                    "title": f"📚 ScienceDirect: {r.get('title', 'עמוד מאמר')}",
+                                    "url": url
+                                })
+                    except Exception:
+                        pass
+
+                # B. ResearchGate Search
                 try:
                     rg_results = ddgs.text(f'site:researchgate.net "{search_query}"', max_results=3)
                     for r in rg_results:
                         url = r.get("href")
                         if is_academic_url(url):
-                            links.append({
-                                "title": f"👥 ResearchGate: {r.get('title', 'עמוד מאמר')}",
-                                "url": url
-                            })
+                            if "sciencedirect.com" in url.lower():
+                                sciencedirect_links.append({
+                                    "title": f"👥 ResearchGate: {r.get('title', 'עמוד מאמר')}",
+                                    "url": url
+                                })
+                            else:
+                                other_links.append({
+                                    "title": f"👥 ResearchGate: {r.get('title', 'עמוד מאמר')}",
+                                    "url": url
+                                })
                 except Exception:
                     pass
                 
-                # 2. General web PDF Search
+                # C. General web PDF Search
                 try:
                     pdf_results = ddgs.text(f'"{search_query}" filetype:pdf', max_results=4)
                     for r in pdf_results:
                         url = r.get("href")
                         if is_academic_url(url):
-                            links.append({
-                                "title": f"📄 PDF מהרשת: {r.get('title', 'קישור למאמר')}",
-                                "url": url
-                            })
+                            if "sciencedirect.com" in url.lower():
+                                sciencedirect_links.append({
+                                    "title": f"📄 PDF מהרשת (ScienceDirect): {r.get('title', 'קישור למאמר')}",
+                                    "url": url
+                                })
+                            else:
+                                other_links.append({
+                                    "title": f"📄 PDF מהרשת: {r.get('title', 'קישור למאמר')}",
+                                    "url": url
+                                })
                 except Exception:
                     pass
         except Exception:
             pass
         
     if doi:
-        links.append({
-            "title": "🔗 קישור למזהה DOI רשמי של המוציא לאור (dx.doi.org)",
-            "url": f"https://dx.doi.org/{doi}"
-        })
+        # Avoid duplicate DOI if we already added it at the top as ScienceDirect
+        if not doi.lower().startswith("10.1016/"):
+            other_links.append({
+                "title": "🔗 קישור למזהה DOI רשמי של המוציא לאור (dx.doi.org)",
+                "url": f"https://dx.doi.org/{doi}"
+            })
+            
         for mirror in SCIHUB_MIRRORS:
-            links.append({
+            other_links.append({
                 "title": f"דף המאמר ב-Sci-Hub ({mirror.split('//')[-1]})",
                 "url": f"{mirror}/{doi}"
             })
             
-    return links
+    # Deduplicate links by URL (case-insensitive) while preserving order
+    seen_urls = set()
+    final_links = []
+    for item in (sciencedirect_links + other_links):
+        url_lower = item["url"].lower()
+        if url_lower not in seen_urls:
+            seen_urls.add(url_lower)
+            final_links.append(item)
+            
+    return final_links
 
 # PDF Preview Embedder
 def display_pdf_preview(pdf_bytes):
