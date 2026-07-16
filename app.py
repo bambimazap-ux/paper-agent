@@ -1436,15 +1436,15 @@ if st.session_state["search_results"] is not None:
         
         fallback_html = '<div class="fallback-container">'
         for idx, item in enumerate(fallback_results, 1):
-            fallback_html += f"""
-            <a href="{item['url']}" target="_blank" class="fallback-card">
-                <div class="fallback-content">
-                    <div class="fallback-title">{idx}. {item['title']}</div>
-                    <div class="fallback-url">{item['url']}</div>
-                </div>
-                <div class="fallback-arrow">←</div>
-            </a>
-            """
+            fallback_html += (
+                f'<a href="{item["url"]}" target="_blank" class="fallback-card">'
+                f'<div class="fallback-content">'
+                f'<div class="fallback-title">{idx}. {item["title"]}</div>'
+                f'<div class="fallback-url">{item["url"]}</div>'
+                f'</div>'
+                f'<div class="fallback-arrow">←</div>'
+                f'</a>'
+            )
         fallback_html += '</div>'
         st.markdown(fallback_html, unsafe_allow_html=True)
             
